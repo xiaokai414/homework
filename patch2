@@ -1,0 +1,57 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+x = torch.empty(5, 3)
+y = torch.rand(5, 3) 
+z = torch.zeros(5, 3, dtype=torch.long)
+
+if torch.cuda.is_available():
+  device = torch.device("cuda")
+  y = y.to(device)
+  z = z.to(device)
+
+  
+x = torch.randn(5, 3)
+y = torch.randn(5, 3)
+z = x + y
+z = torch.add(x, y) 
+z = x.add_(y) 
+
+z = x[0, 0].item() 
+print(x[:, 1])
+
+x = torch.randn(4, 4)
+y = x.view(16)  
+z = x.view(-1, 8) 
+
+layer = nn.Linear(3, 4)
+data = torch.randn(2, 3)
+out = layer(data)
+
+criterion = nn.MSELoss() 
+loss = criterion(pred, true)
+
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01) 
+optimizer.step()
+
+train_set = datasets.MNIST('./data', train=True)   
+train_loader = DataLoader(train_set, batch_size=64)
+data = next(iter(train_loader))
+
+for images, labels in train_loader:
+    optimizer.zero_grad()
+    pred = model(images)
+    loss = loss_fn(pred, labels)
+    loss.backward()
+    optimizer.step()
+    
+torch.save(model.state_dict(), PATH)
+model = ModelClass(*args, **kwargs)
+model.load_state_dict(torch.load(PATH))
+model.eval()
+
+model.cuda()
+images, labels = images.cuda(), labels.cuda()
+
+summary(model, input_size=(channels, H, W))
